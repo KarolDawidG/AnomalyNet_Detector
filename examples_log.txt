@@ -1,0 +1,112 @@
+Inny protokół: 128
+Inny protokół: 128
+2023-11-20 15:38:26: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 501
+TCP Source Port: 33474, Destination Port: 443
+TCP Flags: ACK 
+TCP Source Port: 443, Destination Port: 33474
+TCP Flags: ACK 
+TCP Source Port: 443, Destination Port: 34616
+TCP Flags: ACK 
+2023-11-20 15:38:27: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 502
+TCP Source Port: 34616, Destination Port: 443
+TCP Flags: ACK 
+UDP Source Port: 5353, Destination Port: 5353
+Inny protokół: 128
+Inny protokół: 128
+Inny protokół: 128
+2023-11-20 15:38:33: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 503
+TCP Source Port: 59368, Destination Port: 443
+TCP Flags: ACK 
+TCP Source Port: 443, Destination Port: 59368
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 66.254.114.41 - Ilosc: 508
+TCP Source Port: 443, Destination Port: 48834
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 66.254.114.41 - Ilosc: 509
+TCP Source Port: 443, Destination Port: 48834
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 66.254.114.41 - Ilosc: 510
+TCP Source Port: 443, Destination Port: 48834
+TCP Flags: ACK FIN 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 504
+TCP Source Port: 48834, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 505
+TCP Source Port: 48834, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 506
+TCP Source Port: 48834, Destination Port: 443
+TCP Flags: ACK FIN 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 66.254.114.41 - Ilosc: 511
+TCP Source Port: 443, Destination Port: 48834
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 66.254.114.41 - Ilosc: 512
+TCP Source Port: 443, Destination Port: 48846
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 66.254.114.41 - Ilosc: 513
+TCP Source Port: 443, Destination Port: 48846
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 66.254.114.41 - Ilosc: 514
+TCP Source Port: 443, Destination Port: 48846
+TCP Flags: ACK FIN 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 507
+TCP Source Port: 48846, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 508
+TCP Source Port: 48846, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 509
+TCP Source Port: 48846, Destination Port: 443
+TCP Flags: ACK FIN 
+2023-11-20 15:38:35: Liczba pakietów wieksza niz 100 : 66.254.114.41 - Ilosc: 515
+TCP Source Port: 443, Destination Port: 48846
+TCP Flags: ACK 
+TCP Source Port: 443, Destination Port: 34616
+TCP Flags: ACK 
+2023-11-20 15:38:36: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 510
+TCP Source Port: 34616, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 212.77.98.9 - Ilosc: 140
+TCP Source Port: 443, Destination Port: 56826
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 212.77.98.9 - Ilosc: 141
+TCP Source Port: 443, Destination Port: 56826
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 212.77.98.9 - Ilosc: 142
+TCP Source Port: 443, Destination Port: 56826
+TCP Flags: ACK FIN 
+TCP Source Port: 443, Destination Port: 34616
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 212.77.98.9 - Ilosc: 143
+TCP Source Port: 443, Destination Port: 56826
+TCP Flags: ACK FIN 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 511
+TCP Source Port: 56826, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 512
+TCP Source Port: 56826, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 513
+TCP Source Port: 34616, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 514
+TCP Source Port: 56826, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 515
+TCP Source Port: 56826, Destination Port: 443
+TCP Flags: ACK FIN 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 212.77.98.9 - Ilosc: 144
+TCP Source Port: 443, Destination Port: 56826
+TCP Flags: ACK FIN 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 212.77.98.9 - Ilosc: 145
+TCP Source Port: 443, Destination Port: 56826
+TCP Flags: ACK FIN 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 516
+TCP Source Port: 56826, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 192.168.191.72 - Ilosc: 517
+TCP Source Port: 56826, Destination Port: 443
+TCP Flags: ACK 
+2023-11-20 15:38:38: Liczba pakietów wieksza niz 100 : 212.77.98.9 - Ilosc: 146
+TCP Source Port: 443, Destination Port: 56826
+TCP Flags: ACK 
