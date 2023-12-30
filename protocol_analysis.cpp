@@ -18,6 +18,28 @@ const std::chrono::minutes logInterval(1);
 
 std::chrono::time_point<std::chrono::system_clock> lastLogTime = std::chrono::system_clock::now();
 
+std::map<std::pair<unsigned int, unsigned int>, int> tcpStats; // Mapa dla statystyk TCP
+std::map<std::pair<unsigned int, unsigned int>, int> udpStats; // Mapa dla statystyk UDP
+//std::chrono::system_clock::time_point lastLogTime = std::chrono::system_clock::now(); // Czas ostatniego logowania
+
+void logAggregatedData() {
+    static std::chrono::system_clock::time_point lastLogTime = std::chrono::system_clock::now();
+    auto now = std::chrono::system_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::minutes>(now - lastLogTime);
+    if (elapsed.count() >= 1) {
+        for (const auto& pair : tcpStats) {
+            std::cout << "TCP Port Src: " << pair.first.first << ", Port Dst: " << pair.first.second << ", Liczba pakietów: " << pair.second << std::endl;
+        }
+        for (const auto& pair : udpStats) {
+            std::cout << "UDP Port Src: " << pair.first.first << ", Port Dst: " << pair.first.second << ", Liczba pakietów: " << pair.second << std::endl;
+        }
+
+        tcpStats.clear();
+        udpStats.clear();
+        lastLogTime = now;
+    }
+}
+
 
 // Konwertuje adres IP z formatu binarnego na tekstowy
 std::string ipToString(const in_addr* addr) {
@@ -70,14 +92,7 @@ void analyzeTCP(const u_char* payload, unsigned int size) {
     const struct tcphdr* tcpHeader = (struct tcphdr*)payload;
     unsigned int srcPort = ntohs(tcpHeader->source);
     unsigned int dstPort = ntohs(tcpHeader->dest);
-    unsigned int tcpFlags = tcpHeader->th_flags;
-    std::cout << getCurrentTime() << ": TCP Source Port: " << srcPort << ", Destination Port: " << dstPort << " ";
-    if (tcpFlags & TH_SYN) std::cout << "SYN ";
-    if (tcpFlags & TH_ACK) std::cout << "ACK ";
-    if (tcpFlags & TH_RST) std::cout << "RST ";
-    if (tcpFlags & TH_FIN) std::cout << "FIN ";
-    if (tcpFlags & TH_URG) std::cout << "URG ";
-    std::cout << std::endl;
+    tcpStats[{srcPort, dstPort}]++;
 }
 
 // Analizuje nagłówek UDP, w tym porty źródłowe i docelowe
@@ -85,13 +100,12 @@ void analyzeUDP(const u_char* payload, unsigned int size) {
     const struct udphdr* udpHeader = (struct udphdr*)payload;
     unsigned int srcPort = ntohs(udpHeader->source);
     unsigned int dstPort = ntohs(udpHeader->dest);
-    std::cout << getCurrentTime() << ": UDP Source Port: " << srcPort << ", Destination Port: " << dstPort << std::endl;
+    udpStats[{srcPort, dstPort}]++;
 }
 
 // Wybiera odpowiednią funkcję analizującą na podstawie protokołu użytego w pakiecie IP
 void analyzeProtocol(const struct ip* ipHeader, const u_char* packet, unsigned int packetSize) {
     int protocol = ipHeader->ip_p;
-    protocolCount[protocol]++;
     const u_char* payload = packet + sizeof(struct ether_header) + ipHeader->ip_hl * 4;
     switch(protocol) {
         case IPPROTO_TCP:

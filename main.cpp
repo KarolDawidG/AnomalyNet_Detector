@@ -19,6 +19,7 @@ void packetHandler(u_char *userData, const struct pcap_pkthdr* pkthdr, const u_c
     analyzeIPHeader(packet);
     detectAnomaly(srcIP);
     analyzeProtocol(ipHeader, packet, pkthdr->len);
+    logAggregatedData();
 }
 
 

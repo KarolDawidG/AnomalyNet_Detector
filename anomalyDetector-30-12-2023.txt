@@ -1,0 +1,17 @@
+2023-12-30 23:20:17: Wykryto potencjalną anomalię: Ilość: 1003 Adres: 192.168.188.72
+2023-12-30 23:20:20: Wykryto potencjalną anomalię: Ilość: 1001 Adres: 212.77.98.9
+2023-12-30 23:21:34: Wykryto potencjalną anomalię: Ilość: 1001 Adres: 192.168.188.72
+2023-12-30 23:24:06: Wykryto potencjalną anomalię: Ilość: 1003 Adres: 64.210.135.114
+2023-12-30 23:24:06: Wykryto potencjalną anomalię: Ilość: 1001 Adres: 192.168.188.72
+2023-12-30 23:25:05: Wykryto potencjalną anomalię: Ilość: 1002 Adres: 15.235.12.62
+2023-12-30 23:25:06: Wykryto potencjalną anomalię: Ilość: 2154 Adres: 192.168.188.72
+2023-12-30 23:25:15: Wykryto potencjalną anomalię: Ilość: 1002 Adres: 48.56.0.0
+2023-12-30 23:25:38: Wykryto potencjalną anomalię: Ilość: 1004 Adres: 209.126.105.228
+2023-12-30 23:26:00: Wykryto potencjalną anomalię: Ilość: 1001 Adres: 85.93.89.39
+2023-12-30 23:26:06: Wykryto potencjalną anomalię: Ilość: 3624 Adres: 192.168.188.72
+2023-12-30 23:26:17: Wykryto potencjalną anomalię: Ilość: 1002 Adres: 48.56.0.0
+2023-12-30 23:26:20: Wykryto potencjalną anomalię: Ilość: 1002 Adres: 144.208.19.136
+2023-12-30 23:26:56: Wykryto potencjalną anomalię: Ilość: 1002 Adres: 209.126.105.228
+2023-12-30 23:27:03: Wykryto potencjalną anomalię: Ilość: 1002 Adres: 85.93.89.39
+2023-12-30 23:27:07: Wykryto potencjalną anomalię: Ilość: 2655 Adres: 192.168.188.72
+2023-12-30 23:27:18: Wykryto potencjalną anomalię: Ilość: 1001 Adres: 148.113.161.11

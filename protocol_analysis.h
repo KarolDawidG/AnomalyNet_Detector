@@ -12,6 +12,7 @@ void analyzeProtocol(const struct ip* ipHeader, const u_char* packet, unsigned i
 
 // Deklaracje nowych funkcji pomocniczych
 std::string ipToString(const in_addr* addr);
-void logPacketInfo(const std::string& src, const std::string& dst);
+
+void logAggregatedData();
 
 #endif // PROTOCOL_ANALYSIS_H
