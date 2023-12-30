@@ -23,7 +23,7 @@ void analyzeIPHeader(const u_char* packet) {
     // Konwersja adresów IP na czytelny format
     inet_ntop(AF_INET, &(ipHeader->ip_src), src, INET_ADDRSTRLEN);
     inet_ntop(AF_INET, &(ipHeader->ip_dst), dst, INET_ADDRSTRLEN);
-
+    
     std::cout << getCurrentTime() << ": IP Source: " << src <<" - "<<"IP Destination: " << dst << std::endl;
 }
 
