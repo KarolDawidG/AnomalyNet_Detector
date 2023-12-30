@@ -4,20 +4,23 @@
 #include <iostream>
 #include <pcap.h>
 #include <netinet/if_ether.h>
+#include <netinet/ip.h>
 #include <fstream>
 
 std::ofstream logFile;
 
 void packetHandler(u_char *userData, const struct pcap_pkthdr* pkthdr, const u_char* packet) {
     const struct ip* ipHeader = (struct ip*)(packet + sizeof(struct ether_header));
+    std::string srcIP = ipToString(&(ipHeader->ip_src));
 
     int* fileIndex = reinterpret_cast<int*>(userData);
     checkAndRotateLogFile(*fileIndex, logFile);
 
     analyzeIPHeader(packet);
-    detectAnomaly(packet);
+    detectAnomaly(srcIP);
     analyzeProtocol(ipHeader, packet, pkthdr->len);
 }
+
 
 int main() {
     pcap_t *descr;

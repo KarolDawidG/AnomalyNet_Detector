@@ -2,63 +2,58 @@
 #include "utils.h"
 #include "globals.h"
 #include <iostream>
-#include <pcap.h>
-#include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <netinet/if_ether.h>
-#include <netinet/tcp.h>
-#include <netinet/udp.h>
+#include <netinet/ip.h>  // Dla struktur ip, iphdr
+#include <netinet/tcp.h> // Dla struktur tcphdr
+#include <netinet/udp.h> // Dla struktur udphdr
 
+// Mapy do przechowywania liczby pakietów od poszczególnych IP oraz protokołów
 std::map<std::string, int> ipCount;
 std::map<int, int> protocolCount;
+// Rejestrowanie czasu ostatniego zalogowania anomalii dla każdego IP
 std::map<std::string, std::chrono::system_clock::time_point> lastLogged;
+// Interwał czasowy, po którym ponownie rejestrowana jest anomalia od tego samego IP
 const std::chrono::minutes logInterval(1); 
 
+// Konwertuje adres IP z formatu binarnego na tekstowy
+std::string ipToString(const in_addr* addr) {
+    char ipStr[INET_ADDRSTRLEN];
+    inet_ntop(AF_INET, addr, ipStr, INET_ADDRSTRLEN);
+    return ipStr;
+}
+
+// Loguje informacje o pakiecie, w tym źródłowy i docelowy adres IP
+void logPacketInfo(const std::string& src, const std::string& dst) {
+    std::cout << getCurrentTime() << ": IP Source: " << src << " - IP Destination: " << dst << std::endl;
+}
+
+// Analizuje nagłówek IP pakietu, wydobywając i logując adresy źródłowy i docelowy
 void analyzeIPHeader(const u_char* packet) {
     const struct ip* ipHeader = (struct ip*)(packet + sizeof(struct ether_header));
-
-    char src[INET_ADDRSTRLEN];
-    char dst[INET_ADDRSTRLEN];
-
-    // Konwersja adresów IP na czytelny format
-    inet_ntop(AF_INET, &(ipHeader->ip_src), src, INET_ADDRSTRLEN);
-    inet_ntop(AF_INET, &(ipHeader->ip_dst), dst, INET_ADDRSTRLEN);
-    
-    std::cout << getCurrentTime() << ": IP Source: " << src <<" - "<<"IP Destination: " << dst << std::endl;
+    std::string src = ipToString(&(ipHeader->ip_src));
+    std::string dst = ipToString(&(ipHeader->ip_dst));
+    logPacketInfo(src, dst);
 }
 
-void detectAnomaly(const u_char* packet) {
-    const struct ip* ipHeader = (struct ip*)(packet + sizeof(struct ether_header));
-    char src[INET_ADDRSTRLEN];
-    inet_ntop(AF_INET, &(ipHeader->ip_src), src, INET_ADDRSTRLEN);
-    std::string srcIP(src);
+// Wykrywa anomalie w ruchu sieciowym, bazując na liczbie pakietów od określonego adresu IP
+void detectAnomaly(const std::string& srcIP) {
     ipCount[srcIP]++;
-    //////////////////////// funkcja testowa
-       if (ipCount[srcIP] > 100 && ipCount[srcIP] < 1000) {
-        logFile << getCurrentTime() <<": Liczba pakietów wieksza niz 100 : "<< srcIP << " - Ilosc: "<<ipCount[srcIP]<<std::endl;
-    }
-    ////////////////////////////////////////
-
     auto now = std::chrono::system_clock::now();
-        if (ipCount[srcIP] > 1000 && (lastLogged.find(srcIP) == lastLogged.end() || now - lastLogged[srcIP] > logInterval)) {
-                logFile << getCurrentTime() <<": Wykryto potencjalną anomalię: "<< "Ilosc: "<<ipCount[srcIP]<<" Adres: "<< srcIP << std::endl;
-                std::cout << getCurrentTime() <<": Wykryto potencjalną anomalię: "<< "Ilosc: "<<ipCount[srcIP]<<" Adres: "<< srcIP << std::endl;
-                lastLogged[srcIP] = now;
-            }
+    if (ipCount[srcIP] > 1000 && (lastLogged.find(srcIP) == lastLogged.end() || now - lastLogged[srcIP] > logInterval)) {
+        logFile << getCurrentTime() << ": Wykryto potencjalną anomalię: Ilość: " << ipCount[srcIP] << " Adres: " << srcIP << std::endl;
+        std::cout << getCurrentTime() << ": Wykryto potencjalną anomalię: Ilość: " << ipCount[srcIP] << " Adres: " << srcIP << std::endl;
+        lastLogged[srcIP] = now;
+    }
 }
 
+// Analizuje nagłówek TCP, w tym porty źródłowe i docelowe oraz flagi TCP
 void analyzeTCP(const u_char* payload, unsigned int size) {
     const struct tcphdr* tcpHeader = (struct tcphdr*)payload;
-
-    // Pobieranie portów źródłowych i docelowych
     unsigned int srcPort = ntohs(tcpHeader->source);
     unsigned int dstPort = ntohs(tcpHeader->dest);
-
-    // Pobieranie flag TCP
     unsigned int tcpFlags = tcpHeader->th_flags;
-
     std::cout << getCurrentTime() << ": TCP Source Port: " << srcPort << ", Destination Port: " << dstPort << " ";
-    std::cout << "TCP Flags: ";
     if (tcpFlags & TH_SYN) std::cout << "SYN ";
     if (tcpFlags & TH_ACK) std::cout << "ACK ";
     if (tcpFlags & TH_RST) std::cout << "RST ";
@@ -67,22 +62,19 @@ void analyzeTCP(const u_char* payload, unsigned int size) {
     std::cout << std::endl;
 }
 
+// Analizuje nagłówek UDP, w tym porty źródłowe i docelowe
 void analyzeUDP(const u_char* payload, unsigned int size) {
     const struct udphdr* udpHeader = (struct udphdr*)payload;
-
-    // Pobieranie portów źródłowych i docelowych
     unsigned int srcPort = ntohs(udpHeader->source);
     unsigned int dstPort = ntohs(udpHeader->dest);
-
-    std::cout<< getCurrentTime() << ": UDP Source Port: " << srcPort << ", Destination Port: " << dstPort << std::endl;
+    std::cout << getCurrentTime() << ": UDP Source Port: " << srcPort << ", Destination Port: " << dstPort << std::endl;
 }
 
+// Wybiera odpowiednią funkcję analizującą na podstawie protokołu użytego w pakiecie IP
 void analyzeProtocol(const struct ip* ipHeader, const u_char* packet, unsigned int packetSize) {
     int protocol = ipHeader->ip_p;
     protocolCount[protocol]++;
-
     const u_char* payload = packet + sizeof(struct ether_header) + ipHeader->ip_hl * 4;
-
     switch(protocol) {
         case IPPROTO_TCP:
             analyzeTCP(payload, packetSize - ipHeader->ip_hl * 4);
@@ -97,6 +89,6 @@ void analyzeProtocol(const struct ip* ipHeader, const u_char* packet, unsigned i
             std::cout << getCurrentTime() << ": Protokół SCTP" << std::endl;
             break;
         default:
-            std::cout << getCurrentTime()<< ": Inny protokół: " << static_cast<int>(protocol) << std::endl;
+            std::cout << getCurrentTime() << ": Inny protokół: " << static_cast<int>(protocol) << std::endl;
     }
 }
