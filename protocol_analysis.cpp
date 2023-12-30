@@ -14,7 +14,10 @@ std::map<int, int> protocolCount;
 // Rejestrowanie czasu ostatniego zalogowania anomalii dla każdego IP
 std::map<std::string, std::chrono::system_clock::time_point> lastLogged;
 // Interwał czasowy, po którym ponownie rejestrowana jest anomalia od tego samego IP
-const std::chrono::minutes logInterval(1); 
+const std::chrono::minutes logInterval(1);
+
+std::chrono::time_point<std::chrono::system_clock> lastLogTime = std::chrono::system_clock::now();
+
 
 // Konwertuje adres IP z formatu binarnego na tekstowy
 std::string ipToString(const in_addr* addr) {
@@ -23,18 +26,33 @@ std::string ipToString(const in_addr* addr) {
     return ipStr;
 }
 
-// Loguje informacje o pakiecie, w tym źródłowy i docelowy adres IP
-void logPacketInfo(const std::string& src, const std::string& dst) {
-    std::cout << getCurrentTime() << ": IP Source: " << src << " - IP Destination: " << dst << std::endl;
-}
-
-// Analizuje nagłówek IP pakietu, wydobywając i logując adresy źródłowy i docelowy
 void analyzeIPHeader(const u_char* packet) {
     const struct ip* ipHeader = (struct ip*)(packet + sizeof(struct ether_header));
+    
+    // Konwersja adresów IP na postać tekstową
     std::string src = ipToString(&(ipHeader->ip_src));
     std::string dst = ipToString(&(ipHeader->ip_dst));
-    logPacketInfo(src, dst);
+    
+    // Aktualizacja statystyk dla adresów IP
+    ipCount[src]++;
+    ipCount[dst]++;
+    
+     // Sprawdzenie, czy minęła minuta od ostatniego logowania
+    auto now = std::chrono::system_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::minutes>(now - lastLogTime);
+    if (elapsed.count() >= 1) {
+        // Logowanie statystyk
+        for (const auto& pair : ipCount) {
+            std::cout <<getCurrentTime() << ": IP: " << pair.first << ", Liczba pakietów: " << pair.second << std::endl;
+        }
+
+        // Resetowanie liczników i aktualizacja czasu ostatniego logowania
+        ipCount.clear();
+        lastLogTime = now;
+    }
+    
 }
+
 
 // Wykrywa anomalie w ruchu sieciowym, bazując na liczbie pakietów od określonego adresu IP
 void detectAnomaly(const std::string& srcIP) {
