@@ -5,15 +5,17 @@
 #include <ctime>
 #include <sys/stat.h>
 
+using namespace std;
+
 /**
  * Pobiera bieżący czas systemowy i konwertuje go na strukturę tm.
  * 
  * return Struktura tm reprezentująca bieżący czas.
  */
-std::tm getCurrentTimeTM() {
-    auto now = std::chrono::system_clock::now(); // Pobiera bieżący czas systemowy
+tm getCurrentTimeTM() {
+    auto now = chrono::system_clock::now(); // Pobiera bieżący czas systemowy
     auto in_time_t = std::chrono::system_clock::to_time_t(now); // Konwertuje czas na typ time_t
-    return *std::localtime(&in_time_t); // Konwertuje time_t na strukturę tm
+    return *localtime(&in_time_t); // Konwertuje time_t na strukturę tm
 }
 
 /**
@@ -22,25 +24,25 @@ std::tm getCurrentTimeTM() {
  * return Sformatowany ciąg znaków reprezentujący bieżący czas.
  */
 std::string getCurrentTime() {
-    std::tm bt = getCurrentTimeTM(); // Pobiera bieżący czas jako strukturę tm
-    std::stringstream ss;
-    ss << std::put_time(&bt, "%Y-%m-%d %X"); // Formatuje czas do formatu "YYYY-MM-DD HH:MM:SS"
+    tm bt = getCurrentTimeTM(); // Pobiera bieżący czas jako strukturę tm
+    stringstream ss;
+    ss << put_time(&bt, "%Y-%m-%d %X"); // Formatuje czas do formatu "YYYY-MM-DD HH:MM:SS"
     return ss.str();
 }
 
 /**
  * Generuje nazwę pliku na podstawie bieżącej daty i indeksu.
  * 
- * @param index Indeks używany do tworzenia unikalnej nazwy pliku.
- * @return Nazwa pliku z datą i indeksem.
+ * param index Indeks używany do tworzenia unikalnej nazwy pliku.
+ * return Nazwa pliku z datą i indeksem.
  */
-std::string getFileName(int index) {
-    std::tm bt = getCurrentTimeTM(); // Pobiera bieżący czas jako strukturę tm
+string getFileName(int index) {
+    tm bt = getCurrentTimeTM(); // Pobiera bieżący czas jako strukturę tm
     char dateStr[100];
     strftime(dateStr, sizeof(dateStr), "%d-%m-%Y", &bt); // Formatuje datę do formatu "DD-MM-YYYY"
 
-    std::ostringstream oss;
-    oss << "anomalyDetector-" << dateStr; // Tworzy podstawę nazwy pliku
+    ostringstream oss;
+    oss << "logs/anomalyDetector-" << dateStr; // Dodaje ścieżkę 'logs/' przed nazwą pliku
     if (index > 0) {
         oss << "-" << index; // Dodaje indeks do nazwy pliku, jeśli jest większy niż 0
     }
@@ -49,11 +51,12 @@ std::string getFileName(int index) {
     return oss.str();
 }
 
+
 /**
  * Zwraca rozmiar pliku.
  * 
- * @param filename Nazwa pliku, którego rozmiar ma zostać sprawdzony.
- * @return Rozmiar pliku w bajtach, lub -1 w przypadku błędu.
+ * param filename Nazwa pliku, którego rozmiar ma zostać sprawdzony.
+ * return Rozmiar pliku w bajtach, lub -1 w przypadku błędu.
  */
 long getFileSize(const std::string& filename) {
     struct stat stat_buf;
@@ -64,17 +67,17 @@ long getFileSize(const std::string& filename) {
 /**
  * Sprawdza rozmiar bieżącego pliku logów i tworzy nowy plik, jeśli rozmiar przekroczy ustalony limit.
  * 
- * @param index Referencja do indeksu bieżącego pliku logów.
- * @param logFile Referencja do strumienia pliku logów.
+ * param index Referencja do indeksu bieżącego pliku logów.
+ * param logFile Referencja do strumienia pliku logów.
  */
 void checkAndRotateLogFile(int& index, std::ofstream& logFile) {
     const long MAX_LOG_SIZE = 1 * 1024 * 1024; // Maksymalny rozmiar pliku logów (1 MB)
-    std::string currentFileName = getFileName(index);
+    string currentFileName = getFileName(index);
     long fileSize = getFileSize(currentFileName);
     
     // Jeśli rozmiar pliku przekroczy maksymalny limit, tworzy nowy plik logów
     if (fileSize >= MAX_LOG_SIZE) {
         logFile.close(); // Zamyka bieżący plik logów
-        logFile.open(getFileName(++index), std::ios::out); // Otwiera nowy plik logów z inkrementowanym indeksem
+        logFile.open(getFileName(++index), ios::out); // Otwiera nowy plik logów z inkrementowanym indeksem
     }
 }

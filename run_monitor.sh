@@ -1,7 +1,7 @@
 #!/bin/bash
 
 output="Analyzer"
-source_files="main.cpp utils.cpp protocol_analysis.cpp"
+source_files="main.cpp utils/utils.cpp protocol_analysis.cpp"
 log_file="analyzer.log"
 find_latest_log_file() {
     ls -Art anomalyDetector-*.txt 2>/dev/null | tail -n 1
@@ -27,6 +27,9 @@ fi
 # Nadanie uprawnień do przechwytywania pakietów (opcjonalne, wymaga sudo)
 sudo setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' $output
 
+# Tworzenie odpowiednich folderow
+mkdir logs
+
 # Menu wyboru
 echo "Wybierz opcję uruchomienia programu:"
 echo "1) Uruchom w tle i zapisz logi do pliku."
@@ -38,7 +41,7 @@ read -p "Wybór: " choice
 case $choice in
     1)
         # Uruchomienie programu w tle i zapis logów
-        ./$output >> $log_file 2>&1 &
+        ./$output > $log_file 2>&1 &
         clear
         echo "Program uruchomiony w tle, PID: $!"
         echo $! > program.pid   #plik z PID programu
@@ -46,7 +49,7 @@ case $choice in
         ;;
     2)
         # Uruchomienie programu w terminalu
-        ./$output
+        ./$output | tee logs/mainLogFile.txt
         ;;
     3)
         # Czyta logi i wyswietla podejrzane IP
