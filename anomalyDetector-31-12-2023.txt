@@ -1,0 +1,2 @@
+2023-12-31 16:05:59: Wykryto potencjalną anomalię: Ilość: 1003 Adres: 91.194.110.7
+2023-12-31 16:06:00: Wykryto potencjalną anomalię: Ilość: 1002 Adres: 192.168.188.72
