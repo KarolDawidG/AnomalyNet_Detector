@@ -1,13 +1,10 @@
 #!/bin/bash
-
 output="Analyzer"
 source_files="main.cpp utils/utils.cpp protocol_analysis.cpp"
 log_file="analyzer.log"
 find_latest_log_file() {
     ls -Art anomalyDetector-*.txt 2>/dev/null | tail -n 1
 }
-
-
 
 # Sprawdzenie, czy g++ i pcap są zainstalowane
 if ! command -v g++ &> /dev/null || ! ldconfig -p | grep -q libpcap; then
@@ -28,19 +25,21 @@ fi
 sudo setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' $output
 
 # Tworzenie odpowiednich folderow
-mkdir logs
+if [ ! -d "logs" ]; then
+    mkdir logs
+fi
 
 # Menu wyboru
 echo "Wybierz opcję uruchomienia programu:"
-echo "1) Uruchom w tle i zapisz logi do pliku."
+echo "1) Uruchom w tle."
 echo "2) Uruchom w terminalu."
-echo "3) Wyswietl podejrzane adresy IP"
-echo "4) Zakoncz dzialanie programu"
+echo "3) Wyswietl podejrzane adresy IP."
+echo "4) Zakoncz dzialanie programu."
 read -p "Wybór: " choice
 
 case $choice in
     1)
-        # Uruchomienie programu w tle i zapis logów
+        # Uruchomienie programu w tle
         ./$output > $log_file 2>&1 &
         clear
         echo "Program uruchomiony w tle, PID: $!"
@@ -61,10 +60,8 @@ case $choice in
             else
                 echo "Nie znaleziono pliku logów."
             fi
-
         echo
         exec $0
-        
         ;;
     4)
         # Wyjście ze skryptu
