@@ -23,7 +23,11 @@ Program "Analyzer" to zaawansowane narzędzie do monitorowania ruchu sieciowego 
 1. Uruchom w tle i zapisz logi do pliku: Uruchamia program w tle, logując wszystkie dane do pliku.
 2. Uruchom w terminalu: Uruchamia program w terminalu, wyświetlając logi na bieżąco.
 3. Wyświetl podejrzane adresy IP: Analizuje zapisane logi i wyświetla listę podejrzanych adresów IP.
-4. Zakończ działanie programu: Zamyka program i skrypt.
+4. Zablokuj podejrzane adresy IP: Skrypt automatycznie analizuje ostatnie logi i blokuje adresy IP, które generują nadmierną aktywność sieciową, z wykorzystaniem iptables.
+5. Odblokuj wszystkie zablokowane adresy IP: Ta opcja usuwa wszystkie reguły blokowania z iptables, umożliwiając przywrócenie dostępu do wcześniej zablokowanych adresów IP.
+6. Wyświetl iptables z listą zablokowanych IP: Pozwala na wyświetlenie obecnej konfiguracji iptables, w tym zasad ustanowionych przez program.
+
+9. Zakończ działanie programu: Zamyka program i skrypt.
 
 ## Opis Kluczowych Funkcji
 - analyzeIPHeader: Analizuje nagłówek IP i loguje adresy IP.

@@ -6,9 +6,12 @@
 #include <chrono>
 #include <map>
 
-std::string getCurrentTime();
-std::string getFileName(int index);
-long getFileSize(const std::string& filename);
-void checkAndRotateLogFile(int& index, std::ofstream& logFile);
+using namespace std;
+
+string getCurrentTime();
+string getFileName(int index);
+long getFileSize(const string& filename);
+void checkAndRotateLogFile(int& index, ofstream& logFile);
+string generateReport(const string& logFileName);
 
 #endif // UTILS_H

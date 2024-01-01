@@ -33,8 +33,6 @@ block_suspicious_ips() {
     fi
 }
 
-
-
 unblock_all_ips() {
     echo "Odblokowywanie wszystkich zablokowanych adresów IP."
     sudo iptables -L INPUT -n --line-numbers | grep DROP | awk '{print $1}' | sort -r | while read line; do
@@ -64,8 +62,14 @@ sudo setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' $output
 
 # Tworzenie odpowiednich folderow
 if [ ! -d "logs" ]; then
-    mkdir logs
+    mkdir logs 
 fi
+
+if [ ! -d "raports" ]; then
+    mkdir raports 
+fi
+
+
 
 # Menu wyboru
 echo "Wybierz opcję uruchomienia programu:"
@@ -75,13 +79,14 @@ echo "3) Wyswietl podejrzane adresy IP."
 echo "4) Zablokuj podejrzane adresy IP"
 echo "5) Odblokuj podejrzane adresy IP"
 echo "6) Wyswietl iptable z lista blokowanych IP"
+echo "7) Raport"
 echo "9) Zakoncz dzialanie programu."
 read -p "Wybór: " choice
 
 case $choice in
     1)
         # Uruchomienie programu w tle
-        ./$output > $log_file 2>&1 &
+        ./$output >> "$log_file" 2>&1 &
         clear
         echo "Program uruchomiony w tle, PID: $!"
         echo $! > program.pid   #plik z PID programu
@@ -90,7 +95,7 @@ case $choice in
         ;;
     2)
         # Uruchomienie programu w terminalu
-        ./$output | tee $log_file
+        ./$output | tee -a "$log_file"
         ;;
     3)
         # Czyta logi i wyswietla podejrzane IP
@@ -125,6 +130,41 @@ case $choice in
         echo
         exec $0
         ;;
+    7)
+        clear
+        echo "Generowanie raportu, proszę czekać..."
+        # Sprawdzenie, czy plik z logami istnieje
+        if [ ! -f "$log_file" ]; then
+            echo
+            echo "Plik z logami nie istnieje."
+            echo "Wybierz opcje 1 lub 2, aby rozpoczac nowy monitoring sieci."
+            exec $0
+        else
+            ./$output report  # Wywołanie programu z argumentem 'report'
+            # Po wygenerowaniu raportu
+            echo "Raport został wygenerowany. Czy chcesz usunąć plik z logami? t/n (tak/nie)"
+            read odpowiedz
+
+
+            if [ "$odpowiedz" = "t" ]; then
+                if [ -f "$log_file" ]; then
+                    echo "Usuwanie pliku z logami..."
+                    rm -f "$log_file"
+                    echo "Plik z logami został usunięty."
+                    echo "Wybierz opcje 1 lub 2, aby rozpoczac nowy monitoring sieci."
+                else
+                    echo "Brak pliku z logami do usunięcia."
+                fi
+            elif [ "$odpowiedz" = "n" ]; then
+                echo "Plik z logami nie zostanie usunięty."
+            else
+                echo "Niepoprawna odpowiedź. Plik z logami nie zostanie usunięty."
+            fi
+        fi
+        exec $0
+        ;;
+
+
     9)
         # Wyjście ze skryptu
         killall Analyzer
@@ -133,6 +173,6 @@ case $choice in
         ;;
     *)
         echo "Nieprawidłowy wybór. Uruchamianie anulowane."
-        exit 1
+        exit $0
         ;;
 esac

@@ -6,6 +6,7 @@
 #include <netinet/if_ether.h>
 #include <netinet/ip.h>
 #include <fstream>
+#include <string>
 
 std::ofstream logFile;
 
@@ -23,7 +24,20 @@ void packetHandler(u_char *userData, const struct pcap_pkthdr* pkthdr, const u_c
 }
 
 
-int main() {
+int main(int argc, char** argv) {
+        
+        if (argc > 1) {
+        std::string mode(argv[1]);
+
+        if (mode == "report") {
+            std::string logFileName = "logs/mainLogFile.txt"; // Ustaw właściwą ścieżkę do pliku log
+            std::string reportFileName = generateReport(logFileName);
+            std::cout << "Raport został wygenerowany: " << reportFileName << std::endl;
+            return 0;
+        }
+        // Inne tryby działania programu...
+    }
+
     pcap_t *descr;
     char errbuf[PCAP_ERRBUF_SIZE];
     int fileIndex = 0;
@@ -34,7 +48,7 @@ int main() {
         return 1;
     }
 
-    logFile.open(getFileName(fileIndex), std::ios::out);
+    logFile.open(getFileName(fileIndex), std::ios::out | std::ios::app);
     if (!logFile.is_open()) {
         std::cerr << "Nie można otworzyć pliku " << getFileName(fileIndex) << " do zapisu." << std::endl;
         return 1;
