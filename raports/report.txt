@@ -1,8 +1,0 @@
-Raport - Statystyki Anomalii IP
-IP: 48.50.0.0 - Anomalie: 1002
-
-Raport - Liczba Pakietów na IP
-
-Raport - Statystyki Portów TCP
-
-Raport - Niezidentyfikowane Protokoły

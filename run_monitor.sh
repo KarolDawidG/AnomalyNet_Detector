@@ -11,7 +11,7 @@ find_latest_log_file() {
 }
 
 block_suspicious_ips() {
-    echo "Blokowanie podejrzanych adresów IP..."
+    echo "Blokowanie podejrzanych adresów IP"
 
     # Pobierz aktualny adres IP hosta
     host_ip=$(hostname -I | awk '{print $1}')
@@ -41,7 +41,6 @@ unblock_all_ips() {
     echo "Wszystkie adresy IP zostały odblokowane."
 }
 
-
 # Sprawdzenie, czy g++ i pcap są zainstalowane
 if ! command -v g++ &> /dev/null || ! ldconfig -p | grep -q libpcap; then
     echo "Nie znaleziono wymaganych narzędzi (g++ lub libpcap)."
@@ -65,11 +64,9 @@ if [ ! -d "logs" ]; then
     mkdir logs 
 fi
 
-if [ ! -d "raports" ]; then
-    mkdir raports 
+if [ ! -d "reports" ]; then
+    mkdir reports 
 fi
-
-
 
 # Menu wyboru
 echo "Wybierz opcję uruchomienia programu:"
@@ -79,7 +76,8 @@ echo "3) Wyswietl podejrzane adresy IP."
 echo "4) Zablokuj podejrzane adresy IP"
 echo "5) Odblokuj podejrzane adresy IP"
 echo "6) Wyswietl iptable z lista blokowanych IP"
-echo "7) Raport"
+echo "7) Wyswietl raport z logow"
+echo
 echo "9) Zakoncz dzialanie programu."
 read -p "Wybór: " choice
 
@@ -125,6 +123,7 @@ case $choice in
         exec $0 
         ;;
     6)
+        # Wyswietla liste potencjalnie zablokowanych adresow
         clear
         sudo iptables -L INPUT -n --line-numbers
         echo
@@ -142,29 +141,41 @@ case $choice in
         else
             ./$output report  # Wywołanie programu z argumentem 'report'
             # Po wygenerowaniu raportu
-            echo "Raport został wygenerowany. Czy chcesz usunąć plik z logami? t/n (tak/nie)"
-            read odpowiedz
+            clear
 
-
-            if [ "$odpowiedz" = "t" ]; then
-                if [ -f "$log_file" ]; then
-                    echo "Usuwanie pliku z logami..."
-                    rm -f "$log_file"
-                    echo "Plik z logami został usunięty."
-                    echo "Wybierz opcje 1 lub 2, aby rozpoczac nowy monitoring sieci."
+            # Pierwsze pytanie
+            echo "Raport został wygenerowany."
+            echo "Czy chcesz wyswietlic raport?? t/n (tak/nie)"
+            read odp1
+                if [ "$odp1" = "t" ]; then
+                less reports/report.txt 
                 else
-                    echo "Brak pliku z logami do usunięcia."
+                    echo "Niepoprawna odpowiedź."
                 fi
-            elif [ "$odpowiedz" = "n" ]; then
-                echo "Plik z logami nie zostanie usunięty."
-            else
-                echo "Niepoprawna odpowiedź. Plik z logami nie zostanie usunięty."
-            fi
+            clear
+
+            # Drugie pytanie
+            echo "Czy chcesz usunąć plik z logami? t/n (tak/nie)"
+            read odp2
+
+                if [ "$odp2" = "t" ]; then
+                    if [ -f "$log_file" ]; then
+                        echo "Usuwanie pliku z logami."
+                        rm -f "$log_file"
+                        echo "Plik z logami został usunięty."
+                        echo "Wybierz opcje 1 lub 2, aby rozpoczac nowy monitoring sieci."
+                    else
+                        echo "Brak pliku z logami do usunięcia."
+                    fi
+                elif [ "$odp2" = "n" ]; then
+                    echo "Plik z logami nie zostanie usunięty."
+                else
+                    echo "Niepoprawna odpowiedź. Plik z logami nie zostanie usunięty."
+                fi
         fi
+        
         exec $0
         ;;
-
-
     9)
         # Wyjście ze skryptu
         killall Analyzer
@@ -172,7 +183,8 @@ case $choice in
         exit 0
         ;;
     *)
-        echo "Nieprawidłowy wybór. Uruchamianie anulowane."
-        exit $0
+        # Restart skryptu w przypadku wybrania zlej wartosci
+        echo "Nieprawidłowy wybór. Wybierz jeszcze raz, badz wybierz 9 aby wyjsc!."
+        exec $0
         ;;
 esac

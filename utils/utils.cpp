@@ -8,12 +8,8 @@
 #include <iostream>
 #include <regex>
 #include <string>
-//#include <vector>
 
 using namespace std;
-
-// global variable
-string currentFileName;
 
 /**
  * Pobiera bieżący czas systemowy i konwertuje go na strukturę tm.
@@ -80,7 +76,7 @@ long getFileSize(const std::string& filename) {
  */
 void checkAndRotateLogFile(int& index, std::ofstream& logFile) {
     const long MAX_LOG_SIZE = 1 * 512 * 512; // Maksymalny rozmiar pliku logów (256 kB)
-    currentFileName = getFileName(index);
+    string currentFileName = getFileName(index);
     long fileSize = getFileSize(currentFileName);
     
     // Jeśli rozmiar pliku przekroczy maksymalny limit, tworzy nowy plik logów
@@ -103,7 +99,7 @@ string generateReport(const string& logFileName) {
         return "";
     }
 
-    std::string reportFileName = "raports/report.txt";
+    std::string reportFileName = "reports/report.txt";
     std::ofstream reportFile(reportFileName);
 
     if (!reportFile.is_open()) {
