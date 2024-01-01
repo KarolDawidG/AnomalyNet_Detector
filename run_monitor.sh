@@ -13,13 +13,17 @@ find_latest_log_file() {
 block_suspicious_ips() {
     echo "Blokowanie podejrzanych adresów IP..."
 
+    # Pobierz aktualny adres IP hosta
+    host_ip=$(hostname -I | awk '{print $1}')
+
     latest_log_file=$(find_latest_log_file)
     if [[ -r "$latest_log_file" ]]; then
         while read -r line; do
             IP=$(echo "$line" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b")
             COUNT=$(echo "$line" | grep -oE "Ilość: [0-9]+" | grep -oE "[0-9]+")
 
-            if [[ $COUNT -gt $threshold ]]; then
+            # blokuje liste IP za wyjatkiem IP hosta
+            if [[ $COUNT -gt $threshold && $IP != $host_ip ]]; then
                 sudo iptables -A INPUT -s $IP -j DROP
                 echo "Zablokowano IP: $IP"
             fi
@@ -30,8 +34,9 @@ block_suspicious_ips() {
 }
 
 
+
 unblock_all_ips() {
-    echo "Odblokowywanie wszystkich zablokowanych adresów IP..."
+    echo "Odblokowywanie wszystkich zablokowanych adresów IP."
     sudo iptables -L INPUT -n --line-numbers | grep DROP | awk '{print $1}' | sort -r | while read line; do
         sudo iptables -D INPUT $line
     done
