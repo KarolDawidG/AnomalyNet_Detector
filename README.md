@@ -104,9 +104,10 @@ After each action, the user will be returned to the main menu. The script is smo
 in progress...
 
 
-===============================================================================================
-POLAND
-===============================================================================================
+====================================
+# Polska wersja jezykowa README.md
+====================================                                
+
 # Opis Projektu "AnomalyNet Detector"
 ## Cele i Założenia
 Projekt "AnomalyNet Detector" ma na celu stworzenie zaawansowanego narzędzia do monitorowania ruchu sieciowego w czasie rzeczywistym. Kluczowym założeniem projektu jest dostarczenie użytkownikom łatwego w obsłudze i wydajnego narzędzia do analizy pakietów sieciowych oraz identyfikacji potencjalnych anomalii sieciowych, takich jak nietypowe wzorce ruchu czy nadmierna aktywność z poszczególnych adresów IP.
