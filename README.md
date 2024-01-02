@@ -1,3 +1,20 @@
+```
+     ___      .__   __.   ______   .___  ___.      ___       __      ____    ____ .__   __.  _______ .___________.   
+    /   \     |  \ |  |  /  __  \  |   \/   |     /   \     |  |     \   \  /   / |  \ |  | |   ____||           |   
+   /  ^  \    |   \|  | |  |  |  | |  \  /  |    /  ^  \    |  |      \   \/   /  |   \|  | |  |__   `---|  |----`   
+  /  /_\  \   |  . `  | |  |  |  | |  |\/|  |   /  /_\  \   |  |       \_    _/   |  . `  | |   __|      |  |        
+ /  _____  \  |  |\   | |  `--'  | |  |  |  |  /  _____  \  |  `----.    |  |     |  |\   | |  |____     |  |        
+/__/     \__\ |__| \__|  \______/  |__|  |__| /__/     \__\ |_______|    |__|     |__| \__| |_______|    |__|        
+                                                                                                                    
+ _______   _______ .___________. _______   ______ .___________.  ______   .______      
+|       \ |   ____||           ||   ____| /      ||           | /  __  \  |   _  \     
+|  .--.  ||  |__   `---|  |----`|  |__   |  ,----'`---|  |----`|  |  |  | |  |_)  |    
+|  |  |  ||   __|      |  |     |   __|  |  |         |  |     |  |  |  | |      /     
+|  '--'  ||  |____     |  |     |  |____ |  `----.    |  |     |  `--'  | |  |\  \----.
+|_______/ |_______|    |__|     |_______| \______|    |__|      \______/  | _| `._____|
+                                                                                       
+```
+
 # Project Description "AnomalyNet Detector"
 ## Goals and Assumptions
 The "AnomalyNet Detector" project aims to create an advanced tool for real-time network traffic monitoring. The key assumption of the project is to provide users with an easy-to-use and efficient tool for network packet analysis and identification of potential network anomalies, such as unusual traffic patterns or excessive activity from individual IP addresses.
@@ -104,9 +121,23 @@ After each action, the user will be returned to the main menu. The script is smo
 in progress...
 
 
-====================================
-# Polska wersja jezykowa README.md
-====================================                                
+```
+.______     ______    __           _______. __  ___      ___      
+|   _  \   /  __  \  |  |         /       ||  |/  /     /   \     
+|  |_)  | |  |  |  | |  |        |   (----`|  '  /     /  ^  \    
+|   ___/  |  |  |  | |  |         \   \    |    <     /  /_\  \   
+|  |      |  `--'  | |  `----..----)   |   |  .  \   /  _____  \  
+| _|       \______/  |_______||_______/    |__|\__\ /__/     \__\ 
+
+____    __    ____  _______ .______           _______.       __       ___      
+\   \  /  \  /   / |   ____||   _  \         /       |      |  |     /   \     
+ \   \/    \/   /  |  |__   |  |_)  |       |   (----`      |  |    /  ^  \    
+  \            /   |   __|  |      /         \   \    .--.  |  |   /  /_\  \   
+   \    /\    /    |  |____ |  |\  \----..----)   |   |  `--'  |  /  _____  \  
+    \__/  \__/     |_______|| _| `._____||_______/     \______/  /__/     \__\ 
+                                                                               
+                                                                  
+```                               
 
 # Opis Projektu "AnomalyNet Detector"
 ## Cele i Założenia
