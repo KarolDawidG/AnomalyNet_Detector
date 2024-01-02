@@ -97,6 +97,9 @@ if [ ! -d "reports" ]; then
     mkdir reports 
 fi
 
+# Petla do while, celem poprawy dzialania skryptu.
+while true; do
+    clear
 # Menu wyboru
     echo "   _                                 _          _  _         _   "
     echo "  /_\    _ _    ___   _ __    __ _  | |  _  _  | \| |  ___  | |_ "
@@ -138,7 +141,6 @@ case $choice in
         echo $! > program.pid   #plik z PID programu
         echo
         press_to_continue
-        exec $0 # Uruchomienie skryptu ponownie
         ;;
 
     2)  # Uruchomienie programu w terminalu
@@ -156,28 +158,24 @@ case $choice in
             fi
         echo
         press_to_continue
-        exec $0
         ;;
 
     4)  # Blokowanie podejrzanych IP
         block_suspicious_ips
         echo
         press_to_continue
-        exec $0 
         ;;
 
     5)  # Odblokowanie podejrzanych IP
         unblock_all_ips
         echo
         press_to_continue
-        exec $0 
         ;;
 
     6)  # Wyswietla liste potencjalnie zablokowanych adresow
         sudo iptables -L INPUT -n --line-numbers
         echo
         press_to_continue
-        exec $0
         ;;
 
     7)  # Generuj raport z aktualnie posiadanych logow
@@ -224,28 +222,25 @@ case $choice in
                 fi
         fi
         press_to_continue
-        exec $0
         ;;
 
     8) # Blokowanie wybranego adresu IP        
         block_specific_ip
         echo
         press_to_continue
-        exec $0
         ;;
 
     9)  # Odblokowanie danego adresu IP
         unblock_specific_ip
         echo
         press_to_continue
-        exec $0
         ;;
 
     0)
         # Wyjście ze skryptu
         killall Analyzer
         echo "Wyjście."
-        exit 0
+        break
         ;;
     
     r)  # Wyswietla readME
@@ -297,12 +292,11 @@ case $choice in
         echo "============================================================"
         echo
         press_to_continue
-        exec $0
         ;;
     *)
         # Restart skryptu w przypadku wybrania zlej wartosci
         echo "Nieprawidłowy wybór. Wybierz jeszcze raz, badz wybierz '0' aby wyjsc!."
         press_to_continue
-        exec $0
         ;;
-esac
+    esac
+done
