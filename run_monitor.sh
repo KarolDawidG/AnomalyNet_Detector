@@ -129,7 +129,7 @@ while true; do
     echo "=========================================================================================="
     echo "0) Zakoncz działanie programu - Zamyka monitor sieciowy i kończy skrypt."
     echo "------------------------------------------------------------------------------------------"
-    echo "r) Read me - jesli chcesz zapoznac sie z opisem programu, wybierz 'r'"
+    echo "r) Read me - jesli chcesz zapoznac sie z opisem programu, wybierz 'r'."
     read -p "Wybierz opcję: " choice
 
 
