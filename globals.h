@@ -3,6 +3,7 @@
 
 #include <fstream>
 
+
 extern std::ofstream logFile;
 
 #endif // GLOBALS_H

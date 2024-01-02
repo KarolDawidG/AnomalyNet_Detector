@@ -18,7 +18,7 @@ using namespace std;
  */
 tm getCurrentTimeTM() {
     auto now = chrono::system_clock::now(); // Pobiera bieżący czas systemowy
-    auto in_time_t = std::chrono::system_clock::to_time_t(now); // Konwertuje czas na typ time_t
+    auto in_time_t = chrono::system_clock::to_time_t(now); // Konwertuje czas na typ time_t
     return *localtime(&in_time_t); // Konwertuje time_t na strukturę tm
 }
 
@@ -27,7 +27,7 @@ tm getCurrentTimeTM() {
  * 
  * return Sformatowany ciąg znaków reprezentujący bieżący czas.
  */
-std::string getCurrentTime() {
+string getCurrentTime() {
     tm bt = getCurrentTimeTM(); // Pobiera bieżący czas jako strukturę tm
     stringstream ss;
     ss << put_time(&bt, "%Y-%m-%d %X"); // Formatuje czas do formatu "YYYY-MM-DD HH:MM:SS"
@@ -62,7 +62,7 @@ string getFileName(int index) {
  * param filename Nazwa pliku, którego rozmiar ma zostać sprawdzony.
  * return Rozmiar pliku w bajtach, lub -1 w przypadku błędu.
  */
-long getFileSize(const std::string& filename) {
+long getFileSize(const string& filename) {
     struct stat stat_buf;
     int rc = stat(filename.c_str(), &stat_buf); // Pobiera informacje o pliku
     return rc == 0 ? stat_buf.st_size : -1; // Zwraca rozmiar pliku, lub -1 jeśli wystąpi błąd
@@ -74,7 +74,7 @@ long getFileSize(const std::string& filename) {
  * param index Referencja do indeksu bieżącego pliku logów.
  * param logFile Referencja do strumienia pliku logów.
  */
-void checkAndRotateLogFile(int& index, std::ofstream& logFile) {
+void checkAndRotateLogFile(int& index, ofstream& logFile) {
     const long MAX_LOG_SIZE = 1 * 512 * 512; // Maksymalny rozmiar pliku logów (256 kB)
     string currentFileName = getFileName(index);
     long fileSize = getFileSize(currentFileName);
@@ -95,63 +95,63 @@ void checkAndRotateLogFile(int& index, std::ofstream& logFile) {
 string generateReport(const string& logFileName) {
     ifstream logFile(logFileName);
     if (!logFile.is_open()) {
-        cerr << "Nie można otworzyć pliku logów: " << logFileName << std::endl;
+        cerr << "Nie można otworzyć pliku logów: " << logFileName << endl;
         return "";
     }
 
-    std::string reportFileName = "reports/report.txt";
-    std::ofstream reportFile(reportFileName);
+    string reportFileName = "reports/report.txt";
+    ofstream reportFile(reportFileName);
 
     if (!reportFile.is_open()) {
-        std::cerr << "Nie można utworzyć pliku raportu: " << reportFileName << std::endl;
+        cerr << "Nie można utworzyć pliku raportu: " << reportFileName << endl;
         return "";
     }
 
     // Mapy do przechowywania statystyk
-    std::map<std::string, int> ipAnomaliesCount;
-    std::map<std::string, int> ipPacketCount;
-    std::map<std::string, int> tcpPortStats;
-    std::map<int, int> unidentifiedProtocolStats;
+    map<string, int> ipAnomaliesCount;
+    map<string, int> ipPacketCount;
+    map<string, int> tcpPortStats;
+    map<int, int> unidentifiedProtocolStats;
 
-    std::string line;
-    std::regex anomalyPattern(R"(Wykryto potencjalną anomalię: Ilość: (\d+) Adres: (\S+))");
-    std::regex ipPacketPattern(R"(IP: (\S+) - Liczba pakietów: (\d+))");
-    std::regex tcpPortPattern(R"(TCP - Port Src: (\d+), Port Dst: (\d+) - Liczba pakietów: (\d+))");
-    std::regex protocolPattern(R"(Niezidentyfikowany protokół ID: (\d+) - Liczba pakietów: (\d+))");
+    string line;
+    regex anomalyPattern(R"(Wykryto potencjalną anomalię: Ilość: (\d+) Adres: (\S+))");
+    regex ipPacketPattern(R"(IP: (\S+) - Liczba pakietów: (\d+))");
+    regex tcpPortPattern(R"(TCP - Port Src: (\d+), Port Dst: (\d+) - Liczba pakietów: (\d+))");
+    regex protocolPattern(R"(Niezidentyfikowany protokół ID: (\d+) - Liczba pakietów: (\d+))");
 
-    std::smatch match;
-    while (std::getline(logFile, line)) {
-        if (std::regex_search(line, match, anomalyPattern)) {
-            ipAnomaliesCount[match[2]] += std::stoi(match[1]);
-        } else if (std::regex_search(line, match, ipPacketPattern)) {
-            ipPacketCount[match[1]] += std::stoi(match[2]);
-        } else if (std::regex_search(line, match, tcpPortPattern)) {
-            std::string portKey = "Src: " + match[1].str() + ", Dst: " + match[2].str();
-            tcpPortStats[portKey] += std::stoi(match[3].str());
-        } else if (std::regex_search(line, match, protocolPattern)) {
-            unidentifiedProtocolStats[std::stoi(match[1])] += std::stoi(match[2]);
+    smatch match;
+    while (getline(logFile, line)) {
+        if (regex_search(line, match, anomalyPattern)) {
+            ipAnomaliesCount[match[2]] += stoi(match[1]);
+        } else if (regex_search(line, match, ipPacketPattern)) {
+            ipPacketCount[match[1]] += stoi(match[2]);
+        } else if (regex_search(line, match, tcpPortPattern)) {
+            string portKey = "Src: " + match[1].str() + ", Dst: " + match[2].str();
+            tcpPortStats[portKey] += stoi(match[3].str());
+        } else if (regex_search(line, match, protocolPattern)) {
+            unidentifiedProtocolStats[stoi(match[1])] += stoi(match[2]);
         }
     }
 
     // Zapis statystyk do pliku raportu
-    reportFile << "Raport - Statystyki Anomalii IP" << std::endl;
+    reportFile << "Raport - Statystyki Anomalii IP" << endl;
     for (const auto& pair : ipAnomaliesCount) {
-        reportFile << "IP: " << pair.first << " - Anomalie: " << pair.second << std::endl;
+        reportFile << "IP: " << pair.first << " - Anomalie: " << pair.second << endl;
     }
 
-    reportFile << "\nRaport - Liczba Pakietów na IP" << std::endl;
+    reportFile << "\nRaport - Liczba Pakietów na IP" << endl;
     for (const auto& pair : ipPacketCount) {
-        reportFile << "IP: " << pair.first << " - Liczba pakietów: " << pair.second << std::endl;
+        reportFile << "IP: " << pair.first << " - Liczba pakietów: " << pair.second << endl;
     }
 
-    reportFile << "\nRaport - Statystyki Portów TCP" << std::endl;
+    reportFile << "\nRaport - Statystyki Portów TCP" << endl;
     for (const auto& pair : tcpPortStats) {
-        reportFile << "Porty " << pair.first << " - Liczba pakietów: " << pair.second << std::endl;
+        reportFile << "Porty " << pair.first << " - Liczba pakietów: " << pair.second << endl;
     }
 
-    reportFile << "\nRaport - Niezidentyfikowane Protokoły" << std::endl;
+    reportFile << "\nRaport - Niezidentyfikowane Protokoły" << endl;
     for (const auto& pair : unidentifiedProtocolStats) {
-        reportFile << "Protokół ID: " << pair.first << " - Liczba pakietów: " << pair.second << std::endl;
+        reportFile << "Protokół ID: " << pair.first << " - Liczba pakietów: " << pair.second << endl;
     }
 
     logFile.close();

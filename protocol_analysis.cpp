@@ -22,33 +22,32 @@ map<pair<unsigned int, unsigned int>, int> udpStats; // Statystyki dla UDP (port
 map<int, int> icmpStats; // Statystyki dla ICMP
 map<int, int> sctpStats; // Statystyki dla SCTP
 map<int, int> unknownProtocol; // Globalna mapa do przechowywania statystyk dla nierozpoznanych protokołów
-const chrono::minutes aggregationInterval(1); // Interwał czasowy jednej minuty dla agregacji danych
+const chrono::minutes aggregationInterval(5); // Interwał czasowy dla agregacji danych
 
 // Logowanie zagregowanych danych
 void logAggregatedData() {
     static chrono::system_clock::time_point lastLogTime = chrono::system_clock::now(); // Inicjalizacja statycznego czasu ostatniego logowania
     auto now = chrono::system_clock::now(); // Pobranie aktualnego czasu
-    //auto elapsed = chrono::duration_cast<chrono::minutes>(now - lastLogTime); // Obliczenie różnicy czasu
+    // Obliczenie różnicy czasu
     auto elapsed = now - lastLogTime;
-
-    if (elapsed >= aggregationInterval) { // Sprawdzenie czy minęła minuta od ostatniego logowania
-        cout << SUMMARY_HEADER << endl; // Wyświetlenie nagłówka podsumowania
-        cout << getCurrentTime() << AGGREGATED_STATS << endl; // Wyświetlenie czasu i informacji o zagregowanych statystykach
-        // Pętle do wyświetlania zagregowanych danych dla każdego protokołu
-        for (const auto& pair : tcpStats) { cout << TCP_LOG_MESSAGE << pair.first.first << PORT_DST << pair.first.second << IP_PACKET_COUNT_MESSAGE << pair.second << endl; }
-        for (const auto& pair : udpStats) { cout << UDP_LOG_MESSAGE << pair.first.first << PORT_DST << pair.first.second << IP_PACKET_COUNT_MESSAGE << pair.second << endl; }
-        for (const auto& pair : icmpStats) { cout << ICMP_LOG_MESSAGE << pair.first << IP_PACKET_COUNT_MESSAGE << pair.second << endl; }
-        for (const auto& pair : sctpStats) { cout << SCTP_LOG_MESSAGE << pair.first << IP_PACKET_COUNT_MESSAGE << pair.second << endl; }
-        for (const auto& pair : unknownProtocol) { cout << UNKNOWN_PROTOCOL_MESSAGE << pair.first << IP_PACKET_COUNT_MESSAGE << pair.second << endl;}
-        cout << SUMMARY_HEADER << endl; // Wyświetlenie końcowego nagłówka podsumowania
-        // Resetowanie statystyk
-        tcpStats.clear();
-        udpStats.clear();
-        icmpStats.clear();
-        sctpStats.clear();
-        unknownProtocol.clear();
-        lastLogTime = now; // Aktualizacja czasu ostatniego logowania
-    }
+        if (elapsed >= aggregationInterval) { // Sprawdzenie czy minęła minuta od ostatniego logowania
+            cout << SUMMARY_HEADER << endl; // Wyświetlenie nagłówka podsumowania
+            cout << getCurrentTime() << AGGREGATED_STATS << endl; // Wyświetlenie czasu i informacji o zagregowanych statystykach
+            // Pętle do wyświetlania zagregowanych danych dla każdego protokołu
+            for (const auto& pair : tcpStats) { cout << TCP_LOG_MESSAGE << pair.first.first << PORT_DST << pair.first.second << IP_PACKET_COUNT_MESSAGE << pair.second << endl; }
+            for (const auto& pair : udpStats) { cout << UDP_LOG_MESSAGE << pair.first.first << PORT_DST << pair.first.second << IP_PACKET_COUNT_MESSAGE << pair.second << endl; }
+            for (const auto& pair : icmpStats) { cout << ICMP_LOG_MESSAGE << pair.first << IP_PACKET_COUNT_MESSAGE << pair.second << endl; }
+            for (const auto& pair : sctpStats) { cout << SCTP_LOG_MESSAGE << pair.first << IP_PACKET_COUNT_MESSAGE << pair.second << endl; }
+            for (const auto& pair : unknownProtocol) { cout << UNKNOWN_PROTOCOL_MESSAGE << pair.first << IP_PACKET_COUNT_MESSAGE << pair.second << endl;}
+            cout << SUMMARY_HEADER << endl; // Wyświetlenie końcowego nagłówka podsumowania
+            // Resetowanie statystyk
+            tcpStats.clear();
+            udpStats.clear();
+            icmpStats.clear();
+            sctpStats.clear();
+            unknownProtocol.clear();
+            lastLogTime = now; // Aktualizacja czasu ostatniego logowania
+        }
 }
 
 // Konwertuje adres IP z formatu binarnego na tekstowy

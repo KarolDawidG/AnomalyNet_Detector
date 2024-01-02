@@ -8,15 +8,14 @@
 #include <fstream>
 #include <string>
 
-std::ofstream logFile;
+ofstream logFile;
+string logFileName = "logs/mainLogFile.txt";
 
 void packetHandler(u_char *userData, const struct pcap_pkthdr* pkthdr, const u_char* packet) {
     const struct ip* ipHeader = (struct ip*)(packet + sizeof(struct ether_header));
-    std::string srcIP = ipToString(&(ipHeader->ip_src));
-
+    string srcIP = ipToString(&(ipHeader->ip_src));
     int* fileIndex = reinterpret_cast<int*>(userData);
     checkAndRotateLogFile(*fileIndex, logFile);
-
     analyzeIPHeader(packet);
     detectAnomaly(srcIP);
     analyzeProtocol(ipHeader, packet, pkthdr->len);
@@ -27,15 +26,13 @@ void packetHandler(u_char *userData, const struct pcap_pkthdr* pkthdr, const u_c
 int main(int argc, char** argv) {
         
         if (argc > 1) {
-        std::string mode(argv[1]);
+        string mode(argv[1]);
 
         if (mode == "report") {
-            std::string logFileName = "logs/mainLogFile.txt"; // Ustaw właściwą ścieżkę do pliku log
-            std::string reportFileName = generateReport(logFileName);
-            std::cout << "Raport został wygenerowany: " << reportFileName << std::endl;
+            string reportFileName = generateReport(logFileName);
+            cout << "Raport został wygenerowany: " << reportFileName << endl;
             return 0;
         }
-        // Inne tryby działania programu...
     }
 
     pcap_t *descr;
@@ -44,22 +41,22 @@ int main(int argc, char** argv) {
 
     descr = pcap_open_live("wlp2s0", BUFSIZ, 0, 1000, errbuf);
     if (descr == NULL) {
-        std::cerr << "pcap_open_live() failed: " << errbuf << std::endl;
+        cerr << "pcap_open_live() failed: " << errbuf << endl;
         return 1;
     }
 
-    logFile.open(getFileName(fileIndex), std::ios::out | std::ios::app);
+    logFile.open(getFileName(fileIndex), ios::out | ios::app);
     if (!logFile.is_open()) {
-        std::cerr << "Nie można otworzyć pliku " << getFileName(fileIndex) << " do zapisu." << std::endl;
+        cerr << "Nie można otworzyć pliku " << getFileName(fileIndex) << " do zapisu." << endl;
         return 1;
     }
 
     if (pcap_loop(descr, -1, packetHandler, reinterpret_cast<u_char*>(&fileIndex)) < 0) {
-        std::cerr << "pcap_loop() failed: " << pcap_geterr(descr) << std::endl;
+        cerr << "pcap_loop() failed: " << pcap_geterr(descr) << endl;
         return 1;
     }
 
     logFile.close();
-    std::cout << "Capture complete" << std::endl;
+    cout << "Capture complete" << endl;
     return 0;
 }
