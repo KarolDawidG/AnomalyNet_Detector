@@ -1,9 +1,118 @@
+# Project Description "AnomalyNet Detector"
+## Goals and Assumptions
+The "AnomalyNet Detector" project aims to create an advanced tool for real-time network traffic monitoring. The key assumption of the project is to provide users with an easy-to-use and efficient tool for network packet analysis and identification of potential network anomalies, such as unusual traffic patterns or excessive activity from individual IP addresses.
+
+## Possible Applications
+"AnomalyNet Detector" can be used in various scenarios, including:
+- Network security monitoring in small and medium-sized enterprises.
+- Detection and prevention of DDoS attacks and other network threats.
+- Analysis and management of network traffic on servers, including Linux-based servers.
+- Education in network security and traffic analysis.
+
+## Technologies and Software
+### The project utilizes the following technologies and software:
+1. C++ programming language to create the main program analyzing network traffic.
+2. Bash script for managing the program and user interaction.
+3. G++ and the libpcap library for compiling and capturing network packets.
+
+## Requirements for Running
+### To run "AnomalyNet Detector," the following are required:
+1. Linux operating system.
+2. Installed g++ and libpcap tools.
+3. Administrator privileges (sudo) to manage iptables rules and capture network packets.
+
+## Installation, Launch, and Usage
+### Installation:
+1. Clone the project repository or download the source files.
+2. Install the required tools (g++, libpcap).
+
+## Launch:
+1. Open the terminal and go to the project directory.
+2. Run the bash script (./run_monitor.sh), which will compile and run the program.
+
+## Usage:
+After running the script, the user has access to an interactive menu from which they can select one of the available options, such as starting monitoring, displaying reports, blocking or unblocking IP addresses, etc.
+Network monitoring takes place in the background, recording activity logs and detecting potential anomalies.
+The user can check logs, generate reports, or manage network rules at any time using a simple console interface.
+
+## Features
+- Packet Analysis: The program recognizes and logs detailed information about each captured packet, including source and destination addresses, as well as detailed information about the protocol.
+- Anomaly Detection: The program identifies unusual traffic patterns, such as an excessive number of packets originating from a single IP address.
+- Support for Various Protocols: The program can analyze TCP, UDP, and other protocols, providing detailed information about traffic characteristics.
+- Reporting: Generating reports from logs created during network monitoring.
+- IP Blocking: The ability to block all or individual suspicious IP addresses, listing blocked addresses, and easy unblocking - all from within the application.
+
+## Program Structure
+### The program consists of the following modules:
+# C++
+- main.cpp: The main program file, initiates packet capture and manages logging.
+- utils.cpp: Contains auxiliary functions, including functions for logging time and managing log files.
+- protocol_analysis.cpp: Contains functions for analyzing individual packets and protocols.
+
+# Bash
+- run_monitor.sh: A simple script responsible for controlling the application from the terminal.
+
+## Menu Options
+1. Run in the background: The program is run in the background, logging network activity.
+2. Run in the terminal: The program is run in the terminal, displaying network activity in real-time.
+3. Display suspicious IP addresses: The script analyzes logs and displays IPs with unusual traffic.
+4. Block suspicious IP addresses: The script automatically blocks IPs generating excessive network activity.
+5. Unblock all blocked IP addresses: Removes all IP blocking rules from iptables.
+6. Display IP block list: Displays the current iptables configuration.
+7. Display report from logs: Generates and optionally displays a detailed network activity report.
+8. Block a specific IP address: Allows manually adding a blocking rule for a specific IP address.
+9. Unblock a specific IP address: Allows manually removing a blocking rule for a specific IP address.
+0. End program operation: Closes the program and ends the script.
+- r. Read me - if you want to familiarize yourself with the program description, select 'r'.
+
+## Description of Key Functions
+- analyzeIPHeader: Analyzes the IP header and logs IP addresses.
+- detectAnomaly: Detects anomalies in network traffic and logs them.
+- analyzeTCP/analyzeUDP: Analyzes TCP and UDP headers, respectively.
+- analyzeProtocol: Chooses the appropriate analysis function based on the packet's protocol type.
+
+## Additionally:
+- Logging and Log Rotation: The program saves data to log files with names containing the date. When the log file size reaches 256 kB, a new log file is created.
+- Anomaly Detection: The program tracks the number of packets coming from each IP address. When this number exceeds 1000, the program logs this as a potential anomaly.
+- Reporting: Generating simple reports based on logs.
+
+# Running the Bash Script "AnomalyNet Detector"
+## Checking System Requirements
+The script checks if g++ (C++ compiler) and libpcap (packet capturing library) are installed in the system.
+
+## Compiling the Program
+Using g++, the script compiles the source files of the program (main.cpp, utils.cpp, protocol_analysis.cpp) into an executable file "Analyzer".
+
+## Granting Permissions
+The script sets appropriate permissions on the compiled program so it can capture network packets.
+
+## Creating Folders for Logs and Reports
+The script creates "logs" and "reports" folders, if they do not exist, for storing logs and reports generated by the program.
+
+## Interactive Menu
+The user is presented with an interactive menu with various options for managing the program.
+
+## Additional Functions
+Auxiliary functions such as loading and press_to_continue improve the interactivity and usability of the script.
+
+## Managing the Script
+After each action, the user will be returned to the main menu. The script is smooth and user-friendly, as there is no need to restart it after each action.
+
+# Screenshots
+## Coming Soon
+### Work
+in progress...
+
+
+===============================================================================================
+POLAND
+===============================================================================================
 # Opis Projektu "AnomalyNet Detector"
 ## Cele i Założenia
 Projekt "AnomalyNet Detector" ma na celu stworzenie zaawansowanego narzędzia do monitorowania ruchu sieciowego w czasie rzeczywistym. Kluczowym założeniem projektu jest dostarczenie użytkownikom łatwego w obsłudze i wydajnego narzędzia do analizy pakietów sieciowych oraz identyfikacji potencjalnych anomalii sieciowych, takich jak nietypowe wzorce ruchu czy nadmierna aktywność z poszczególnych adresów IP.
 
-### Możliwe Zastosowania
-"AnomalyNet Detector" może być wykorzystany w różnych scenariuszach, w tym:
+## Możliwe Zastosowania
+### "AnomalyNet Detector" może być wykorzystany w różnych scenariuszach, w tym:
 - Monitorowanie bezpieczeństwa sieci w małych i średnich przedsiębiorstwach.
 - Wykrywanie i prewencja ataków DDoS i innych zagrożeń sieciowych.
 - Analiza i zarządzanie ruchem sieciowym na serwerach, w tym na serwerach opartych o systemy Linux.
@@ -76,8 +185,8 @@ Użytkownik może w dowolnym momencie sprawdzić logi, wygenerować raporty lub 
 - Wykrywanie Anomalii: Program śledzi liczbę pakietów pochodzących z każdego adresu IP. Gdy liczba ta przekroczy 1000, program loguje to jako potencjalną anomalię.
 - Raportowanie: Generowanie prostych raportow na podstawie logow.
 
-## Przebieg Skryptu Bash "AnomalyNet Detector"
-### Sprawdzenie Wymagań Systemowych
+# Przebieg Skryptu Bash "AnomalyNet Detector"
+## Sprawdzenie Wymagań Systemowych
 Skrypt sprawdza, czy g++ (kompilator C++) oraz libpcap (biblioteka do przechwytywania pakietów sieciowych) są zainstalowane w systemie.
 
 ## Kompilacja Programu
