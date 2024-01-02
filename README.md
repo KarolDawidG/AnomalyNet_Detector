@@ -9,20 +9,20 @@ Projekt "AnomalyNet Detector" ma na celu stworzenie zaawansowanego narzędzia do
 - Analiza i zarządzanie ruchem sieciowym na serwerach, w tym na serwerach opartych o systemy Linux.
 - Edukacja w zakresie bezpieczeństwa sieci i analizy ruchu sieciowego.
 
-### Technologie i Oprogramowanie
-## Projekt wykorzystuje następujące technologie i oprogramowanie:
+## Technologie i Oprogramowanie
+### Projekt wykorzystuje następujące technologie i oprogramowanie:
 1. Język programowania C++ do tworzenia głównego programu analizującego ruch sieciowy.
 2. Skrypt bash do zarządzania programem i interakcji z użytkownikiem.
 3. G++ oraz biblioteka libpcap do kompilacji i przechwytywania pakietów sieciowych.
 
-### Wymagania do Uruchomienia
-## Aby uruchomić "AnomalyNet Detector", wymagane jest:
+## Wymagania do Uruchomienia
+### Aby uruchomić "AnomalyNet Detector", wymagane jest:
 1. System operacyjny Linux.
 2. Zainstalowane narzędzia g++ i libpcap.
 3. Uprawnienia administratora (sudo) do zarządzania zasadami iptables oraz przechwytywania pakietów sieciowych.
 
-### Instalacja, Uruchomienie i Użytkowanie
-## Instalacja:
+## Instalacja, Uruchomienie i Użytkowanie
+### Instalacja:
 1. Sklonuj repozytorium projektu lub pobierz pliki źródłowe.
 2. Zainstaluj wymagane narzędzia (g++, libpcap).
 
@@ -35,15 +35,15 @@ Po uruchomieniu skryptu, użytkownik ma dostęp do interaktywnego menu, z które
 Monitorowanie sieci odbywa się w tle, zapisując logi aktywności i wykrywając potencjalne anomalie.
 Użytkownik może w dowolnym momencie sprawdzić logi, wygenerować raporty lub zarządzać zasadami sieciowymi za pomocą prostego interfejsu konsolowego.
 
-### Funkcjonalności
+## Funkcjonalności
 - Analiza pakietów: Program rozpoznaje i loguje szczegółowe informacje o każdym przechwyconym pakiecie, w tym adresy źródłowe i docelowe, a także szczegółowe informacje o protokole.
 - Wykrywanie anomalii: Program identyfikuje nietypowe wzorce ruchu, takie jak nadmierna liczba pakietów pochodzących z jednego adresu IP.
 - Obsługa różnych protokołów: Program potrafi analizować protokoły TCP, UDP oraz inne, dostarczając szczegółowych informacji o charakterystyce ruchu.
 - Raportowanie: Generowanie raportow z logow, ktore powstaja podczas monitoringu sieci.
 - Blokowanie IP: Mozliwosc blokowania wszystkich, badz pojedynczych podejrzanych adresow IP, listowanie zablokowanych, a takze latwe odblokowywanie - wszystko z poziomu aplikacji. 
   
-### Struktura Programu
-## Program składa się z następujących modułów:
+## Struktura Programu
+### Program składa się z następujących modułów:
 # C++
 - main.cpp: Główny plik programu, inicjuje przechwytywanie pakietów i zarządza logowaniem.
 - utils.cpp: Zawiera funkcje pomocnicze, w tym funkcje do logowania czasu i zarządzania plikami logów.
@@ -76,8 +76,8 @@ Użytkownik może w dowolnym momencie sprawdzić logi, wygenerować raporty lub 
 - Wykrywanie Anomalii: Program śledzi liczbę pakietów pochodzących z każdego adresu IP. Gdy liczba ta przekroczy 1000, program loguje to jako potencjalną anomalię.
 - Raportowanie: Generowanie prostych raportow na podstawie logow.
 
-### Przebieg Skryptu Bash "AnomalyNet Detector"
-## Sprawdzenie Wymagań Systemowych
+## Przebieg Skryptu Bash "AnomalyNet Detector"
+### Sprawdzenie Wymagań Systemowych
 Skrypt sprawdza, czy g++ (kompilator C++) oraz libpcap (biblioteka do przechwytywania pakietów sieciowych) są zainstalowane w systemie.
 
 ## Kompilacja Programu
@@ -96,4 +96,9 @@ Użytkownikowi prezentowane jest interaktywne menu z różnymi opcjami do zarzą
 Funkcje pomocnicze takie jak loading oraz press_to_continue poprawiają interaktywność i użyteczność skryptu.
 
 ## Zarządzanie Skryptem
-Po każdej akcji skrypt jest automatycznie restartowany (poprzez exec $0), umożliwiając użytkownikowi wybranie kolejnych opcji bez konieczności ponownego uruchamiania.
+Po każdej wykonanej akcji, użytkownik zostanie przeniesiony z powrotem do menu głównego. Skrypt jest płynny i przyjazny dla użytkownika, ponieważ nie ma potrzeby restartowania go po każdej akcji.
+
+# Screeny
+## Niebawem
+### Prace
+w toku...
