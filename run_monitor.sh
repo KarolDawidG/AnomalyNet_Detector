@@ -10,6 +10,17 @@ find_latest_log_file() {
     ls -Art $log_directory/$log_file_prefix-*.txt 2>/dev/null | tail -n 1
 }
 
+list_suspicious_ip() {
+    echo "Lista podejrzanych IP: "
+                latest_log_file=$(find_latest_log_file)
+        if [ -f "$latest_log_file" ]; then
+            cut -d" " -f9 "$latest_log_file" | sort | uniq
+        else
+            echo "Nie znaleziono pliku logów."
+        fi
+    echo
+}
+
 block_suspicious_ips() {
     echo "Blokowanie podejrzanych adresów IP"
 
@@ -149,14 +160,7 @@ case $choice in
         ;;
 
     3)  # Czyta logi i wyswietla podejrzane IP
-        echo "Lista podejrzanych IP: "
-        latest_log_file=$(find_latest_log_file)
-            if [ -f "$latest_log_file" ]; then
-                cut -d" " -f9 "$latest_log_file" | sort | uniq
-            else
-                echo "Nie znaleziono pliku logów."
-            fi
-        echo
+        list_suspicious_ip
         press_to_continue
         ;;
 
@@ -224,13 +228,20 @@ case $choice in
         press_to_continue
         ;;
 
-    8) # Blokowanie wybranego adresu IP        
+    8) # Blokowanie wybranego adresu IP  
+        echo
+        list_suspicious_ip
+        echo      
         block_specific_ip
         echo
         press_to_continue
         ;;
 
     9)  # Odblokowanie danego adresu IP
+        echo
+        echo "Zablokowane adresy IP:"
+        sudo iptables -L INPUT -n --line-numbers
+        echo
         unblock_specific_ip
         echo
         press_to_continue
