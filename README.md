@@ -122,37 +122,39 @@ After each action, the user will be returned to the main menu. The script is smo
 
 # Screenshots
 ### Main Menu
-<img src="/img/menu.png" width="auto" height="auto"  alt="screenshot1">
+<img src="/img/menu.png" width="auto%" height="auto">
 
-### Main Menu
-<img src="/img/1 praca w tle.png" width="auto" height="auto"  alt="screenshot1">
+### Option 1 and 2
+<p align="center">
+     <img src="/img/1 praca w tle.png" width="45%" height="auto">
+     <img src="/img/praca w terminalu.png" width="45%" height="auto">
+</p>
 
-### Main Menu
-<img src="/img/praca w terminalu.png" width="auto" height="auto"  alt="screenshot1">
+### Option 3 and 4
+<p align="center">
+     <img src="/img/lista podejrzanych.png" width="45%" height="auto">
+     <img src="/img/blokowanie wszystkich ip.png" width="45%" height="auto">
+</p>
 
-### Main Menu
-<img src="/img/lista podejrzanych.png" width="auto" height="auto"  alt="screenshot1">
+### Option 5 and 6
+<p align="center">
+     <img src="/img/odblokowanie wszystkiego.png" width="45%" height="auto">
+     <img src="/img/lista zablokowanych ip.png" width="45%" height="auto">
+</p>
 
-### Main Menu
-<img src="/img/blokowanie wszystkich ip.png" width="auto" height="auto"  alt="screenshot1">
+### Option 7
+<img src="/img/raport 2.png" width="auto" height="auto">
 
-### Main Menu
-<img src="/img/lista zablokowanych ip.png" width="auto" height="auto"  alt="screenshot1">
+### Option 8 and 9
+<p align="center">
+     <img src="/img/blokada wybranego ip.png" width="45%" height="auto">
+     <img src="/img/odblokowanie 2.png" width="45%" height="auto">
+</p>
 
-### Main Menu
-<img src="/img/odblokowanie wszystkiego.png" width="auto" height="auto"  alt="screenshot1">
+### Option r - to display readMe
+<img src="/img/readme 1.png" width="auto" height="auto">
 
-### Main Menu
-<img src="/img/raport 2.png" width="auto" height="auto"  alt="screenshot1">
-
-### Main Menu
-<img src="/img/blokada wybranego ip.png" width="auto" height="auto"  alt="screenshot1">
-
-### Main Menu
-<img src="/img/odblokowanie 2.png" width="auto" height="auto"  alt="screenshot1">
-
-### Main Menu
-<img src="/img/readme 1.png" width="auto" height="auto"  alt="screenshot1">
+<h1 align="center"> ] > ============================== < [ </h1>
 
 ```
 .______     ______    __           _______. __  ___      ___      
