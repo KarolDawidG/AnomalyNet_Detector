@@ -121,8 +121,38 @@ Auxiliary functions such as loading and press_to_continue improve the interactiv
 After each action, the user will be returned to the main menu. The script is smooth and user-friendly, as there is no need to restart it after each action.
 
 # Screenshots
+### Main Menu
 <img src="/img/menu.png" width="auto" height="auto"  alt="screenshot1">
 
+### Main Menu
+<img src="/img/1 praca w tle.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/praca w terminalu.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/lista podejrzanych.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/blokowanie wszystkich ip.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/lista zablokowanych ip.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/odblokowanie wszystkiego.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/raport 2.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/blokada wybranego ip.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/odblokowanie 2.png" width="auto" height="auto"  alt="screenshot1">
+
+### Main Menu
+<img src="/img/readme 1.png" width="auto" height="auto"  alt="screenshot1">
 
 ```
 .______     ______    __           _______. __  ___      ___      
