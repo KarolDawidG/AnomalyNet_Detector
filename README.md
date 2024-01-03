@@ -273,8 +273,3 @@ Funkcje pomocnicze takie jak loading oraz press_to_continue poprawiają interakt
 
 ## Zarządzanie Skryptem
 Po każdej wykonanej akcji, użytkownik zostanie przeniesiony z powrotem do menu głównego. Skrypt jest płynny i przyjazny dla użytkownika, ponieważ nie ma potrzeby restartowania go po każdej akcji.
-
-# Screeny
-## Niebawem
-### Prace
-w toku...
