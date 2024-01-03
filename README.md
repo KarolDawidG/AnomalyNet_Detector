@@ -121,22 +121,20 @@ Auxiliary functions such as loading and press_to_continue improve the interactiv
 After each action, the user will be returned to the main menu. The script is smooth and user-friendly, as there is no need to restart it after each action.
 
 # Screenshots
-## Coming Soon
-### Work
-in progress...
+<img src="/img/menu.png" width="auto" height="auto"  alt="screenshot1">
 
 
 ```
 .______     ______    __           _______. __  ___      ___      
 |   _  \   /  __  \  |  |         /       ||  |/  /     /   \     
-|  |_)  | |  |  |  | |  |        |   (----`|  '  /     /  ^  \    
+|  |_|  | |  |  |  | |  |        |   (----`|  '  /     /  ^  \    
 |   ___/  |  |  |  | |  |         \   \    |    <     /  /_\  \   
 |  |      |  `--'  | |  `----..----)   |   |  .  \   /  _____  \  
 | _|       \______/  |_______||_______/    |__|\__\ /__/     \__\ 
 
 ____    __    ____  _______ .______           _______.       __       ___      
 \   \  /  \  /   / |   ____||   _  \         /       |      |  |     /   \     
- \   \/    \/   /  |  |__   |  |_)  |       |   (----`      |  |    /  ^  \    
+ \   \/    \/   /  |  |__   |  |_|  |       |   (----`      |  |    /  ^  \    
   \            /   |   __|  |      /         \   \    .--.  |  |   /  /_\  \   
    \    /\    /    |  |____ |  |\  \----..----)   |   |  `--'  |  /  _____  \  
     \__/  \__/     |_______|| _| `._____||_______/     \______/  /__/     \__\ 
