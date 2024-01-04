@@ -155,8 +155,14 @@ case $choice in
         ;;
 
     2)  # Uruchomienie programu w terminalu
+        ./$output | tee -a "$log_file" &
+        PID=$!
+        echo
+        echo "Naciśnij dowolny klawisz, aby zakończyć logowanie danych w terminalu"
+        echo
         loading
-        ./$output | tee -a "$log_file"
+        read -n 1  # Oczekuj na naciśnięcie klawisza
+        kill $PID
         ;;
 
     3)  # Czyta logi i wyswietla podejrzane IP
