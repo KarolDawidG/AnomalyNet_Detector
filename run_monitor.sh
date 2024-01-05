@@ -6,6 +6,19 @@ log_file_prefix="anomalyDetector"
 log_file="logs/mainLogFile.txt"
 threshold=1000
 
+# Pobranie nazwy aktywnego interfejsu sieciowego
+interfaceName=$(ip link | grep 'state UP' | grep -E 'wl|en' | awk -F ': ' '{print $2}' | cut -d '@' -f1 | head -n 1)
+interfaceName=$(echo $interfaceName | xargs)  # Usunięcie białych znaków
+
+
+# przechwycenie ctrl c, celem unikanie bledow przy nieoczekiwanym zamknieciu programu
+trap 'echo "Przechwycono Ctrl+C. Program zostanie zamkniety."; trapCtrlC; exit' SIGINT
+
+trapCtrlC() {
+    killall Analyzer
+}
+
+
 find_latest_log_file() {
     ls -Art $log_directory/$log_file_prefix-*.txt 2>/dev/null | tail -n 1
 }
@@ -64,15 +77,6 @@ unblock_specific_ip() {
     read ip_address
     sudo iptables -D INPUT -s $ip_address -j DROP
     echo "Odblokowano adres IP: $ip_address"
-}
-
-loading() {
-        echo -n "Ładowanie"
-        for i in $(seq 1 5); do
-            sleep 0.2
-            echo -n "."
-        done
-        echo
 }
 
 press_to_continue() {
@@ -145,8 +149,8 @@ while true; do
 
 
 case $choice in
-    1)  # Uruchomienie programu w tle
-        ./$output >> "$log_file" 2>&1 &
+    1)  # Uruchomienie programu w tle //test
+        ./$output --interface "$interfaceName" >> "$log_file" 2>&1 &
         clear
         echo "Program uruchomiony w tle, PID: $!"
         echo $! > program.pid   #plik z PID programu
@@ -155,12 +159,11 @@ case $choice in
         ;;
 
     2)  # Uruchomienie programu w terminalu
-        ./$output | tee -a "$log_file" &
+        ./$output --interface "$interfaceName" | tee -a "$log_file" &
         PID=$!
         echo
         echo "Naciśnij dowolny klawisz, aby zakończyć logowanie danych w terminalu"
         echo
-        loading
         read -n 1  # Oczekuj na naciśnięcie klawisza
         kill $PID
         ;;
@@ -190,7 +193,6 @@ case $choice in
 
     7)  # Generuj raport z aktualnie posiadanych logow
         echo "Generowanie raportu, proszę czekać..."
-        loading
         if [ ! -f "$log_file" ]; then
             echo
             echo "Plik z logami nie istnieje."

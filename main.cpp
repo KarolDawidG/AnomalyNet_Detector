@@ -24,7 +24,7 @@ void packetHandler(u_char *userData, const struct pcap_pkthdr* pkthdr, const u_c
 
 
 int main(int argc, char** argv) {
-        
+    // czy pierwszy argument to "report"
         if (argc > 1) {
         string mode(argv[1]);
 
@@ -35,11 +35,24 @@ int main(int argc, char** argv) {
         }
     }
 
+    //sprawdza czy funkcja otrzymala argument 'interface' ze skryptu ./run_monitor
+    string interfaceName;
+        if (argc > 2 && string(argv[1]) == "--interface") {
+            interfaceName = argv[2];
+        } else {
+            cerr << "Nie podano nazwy interfejsu." << endl;
+            return 1;
+        }
+        //konwersja zmiennej typu string na char*
+        const char* cInterfaceName = interfaceName.c_str();
+        
+ 
+
     pcap_t *descr;
     char errbuf[PCAP_ERRBUF_SIZE];
     int fileIndex = 0;
 
-    descr = pcap_open_live("wlp2s0", BUFSIZ, 0, 1000, errbuf);
+    descr = pcap_open_live(cInterfaceName, BUFSIZ, 0, 1000, errbuf);
     if (descr == NULL) {
         cerr << "pcap_open_live() failed: " << errbuf << endl;
         return 1;
