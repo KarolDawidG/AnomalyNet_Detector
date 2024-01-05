@@ -176,6 +176,7 @@ case $choice in
         ./$output --interface "$interfaceName" | tee -a "$log_file" &
         PID=$!
         echo
+        echo $! > program.pid   #plik z PID programu
         echo "Naciśnij dowolny klawisz, aby zakończyć logowanie danych w terminalu"
         echo
         read -n 1  # Oczekuj na naciśnięcie klawisza
@@ -272,6 +273,7 @@ case $choice in
     0)
         # Wyjście ze skryptu
         killall AnomalyNetDetector
+        rm program.pid
         echo "Wyjście."
         break
         ;;
