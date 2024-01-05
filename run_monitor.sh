@@ -1,5 +1,5 @@
 #!/bin/bash
-output="Analyzer"
+output="AnomalyNetDetector"
 source_files="main.cpp utils/utils.cpp protocol_analysis.cpp"
 log_directory="logs"
 log_file_prefix="anomalyDetector"
@@ -14,8 +14,21 @@ interfaceName=$(echo $interfaceName | xargs)  # Usunięcie białych znaków
 # przechwycenie ctrl c, celem unikanie bledow przy nieoczekiwanym zamknieciu programu
 trap 'echo "Przechwycono Ctrl+C. Program zostanie zamkniety."; trapCtrlC; exit' SIGINT
 
+trap 'echo "Przechwycono Ctrl+C. Program zostanie zamknięty."; trapCtrlC; exit' SIGINT
+
 trapCtrlC() {
-    killall Analyzer
+    if [ -f program.pid ]; then
+        PID=$(cat program.pid)
+        if ps -p $PID > /dev/null; then
+           kill $PID
+           echo "Proces AnomalyNetDetector (PID: $PID) został zakończony."
+        else
+           echo "Proces AnomalyNetDetector nie jest już uruchomiony."
+        fi
+        rm program.pid
+    else
+        echo "Plik program.pid nie istnieje. Proces AnomalyNetDetector nie może być zidentyfikowany."
+    fi
 }
 
 
@@ -146,7 +159,8 @@ while true; do
     echo "------------------------------------------------------------------------------------------"
     echo "r) Read me - jesli chcesz zapoznac sie z opisem programu, wybierz 'r'."
     read -p "Wybierz opcję: " choice
-
+    echo
+    echo
 
 case $choice in
     1)  # Uruchomienie programu w tle //test
@@ -257,7 +271,7 @@ case $choice in
 
     0)
         # Wyjście ze skryptu
-        killall Analyzer
+        killall AnomalyNetDetector
         echo "Wyjście."
         break
         ;;
